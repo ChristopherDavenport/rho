@@ -3,22 +3,22 @@ package rho.bits
 
 import cats.Monad
 import org.http4s.rho.Action
-import shapeless.HList
+import shapeless._
+// import shapeless.implicits._
+import shapeless.ops.function._
+import shapeless.ops.hlist._
+import shapeless.syntax.std.function._
 
 /** Converter of an value of type F to the HList of type T
   *
  * @tparam T HList type of the incoming values
  * @tparam U type of element onto which T will be mapped
  */
-trait HListToFunc[F[_], T <: HList, -U] {
+trait HListToFunc[F[_], T <: HList, U] {
   def toAction(f: U): Action[F, T]
 }
 
 trait MatchersHListToFunc[F[_]] {
-  import shapeless._
-  import shapeless.ops.function._
-  import shapeless.ops.hlist._
-  import shapeless.syntax.std.function._
 
   /** Converter of any type with a result matcher when there are no values on the stack
     *
@@ -42,7 +42,7 @@ trait MatchersHListToFunc[F[_]] {
   }
 
   // for convenience
-  private trait MatcherHListToFunc[T <: HList, -FU] extends HListToFunc[F, T, FU] {
+  private trait MatcherHListToFunc[T <: HList, FU] extends HListToFunc[F, T, FU] {
     protected def matcher: ResultMatcher[F, _]
     protected def conv(f: FU): (Request[F], T) => F[Response[F]]
     final override def toAction(f: FU) = Action(matcher.resultInfo, matcher.encodings, conv(f))

@@ -18,7 +18,7 @@ final class ServiceBuilder[F[_]: Monad] private(internalRoutes: VectorBuilder[Rh
     CompileService.foldServices(internalRoutes.result(), filter)
 
   /** Get a snapshot of the currently acquired routes */
-  def routes(): Seq[RhoRoute.Tpe[F]] = internalRoutes.result()
+  def routes(): Vector[RhoRoute.Tpe[F]] = internalRoutes.result()
 
   /** Append the routes into this [[ServiceBuilder]]
     *

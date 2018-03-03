@@ -23,7 +23,7 @@ import shapeless.{HList, HNil}
   *
   * @param routes Routes to prepend before elements in the constructor.
   */
-class RhoService[F[_]: Monad](routes: Seq[RhoRoute[F, _ <: HList]] = Vector.empty)
+class RhoService[F[_]: Monad](routes: Vector[RhoRoute[F, _ <: HList]] = Vector.empty)
     extends bits.MethodAliases
     with bits.ResponseGeneratorInstances[F]
     with RoutePrependable[F, RhoService[F]]
@@ -45,7 +45,7 @@ class RhoService[F[_]: Monad](routes: Seq[RhoRoute[F, _ <: HList]] = Vector.empt
   final def and(other: RhoService[F]): RhoService[F] = new RhoService(this.getRoutes ++ other.getRoutes)
 
   /** Get a snapshot of the collection of [[RhoRoute]]'s accumulated so far */
-  final def getRoutes: Seq[RhoRoute[F, _ <: HList]] = serviceBuilder.routes()
+  final def getRoutes: Vector[RhoRoute[F, _ <: HList]] = serviceBuilder.routes()
 
   /** Convert the [[RhoRoute]]'s accumulated into a `HttpService` */
   final def toService(filter: RhoMiddleware[F] = identity): HttpService[F] = serviceBuilder.toService(filter)

@@ -3,7 +3,7 @@ package rho
 package bits
 
 import cats.{Applicative, Monad}
-import cats.syntax.flatMap._
+import cats.implicits._
 import org.http4s.rho.bits.PathAST._
 import org.http4s.util.UrlCodingUtils
 import org.log4s.getLogger

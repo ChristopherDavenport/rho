@@ -2,7 +2,7 @@ package org.http4s.rho.bits
 
 import cats.data.OptionT
 import cats.{Applicative, Functor, Monad}
-import cats.syntax.functor._
+import cats.implicits._
 import org.http4s._
 import org.http4s.rho.Result.BaseResult
 
